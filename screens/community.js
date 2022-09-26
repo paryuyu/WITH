@@ -42,10 +42,16 @@ function Comunity() {
     rst.reverse();
     //  <CButton style={{flex:1}} >글쓰기</CButton>
 
+    /**글쓰기 */
     const pressHandle = () => {
-        //글쓰기로 바로가기
         navigation.navigate("Write")
     }
+    
+    /**장소추가 */
+    const pressPlaceHandle = () => {
+        navigation.navigate("place")
+    }
+
 
 
     return (<View style={{ flex: 1 }}>
@@ -53,9 +59,15 @@ function Comunity() {
             <Font style={{ flex: 1 }}>
                 커뮤니티 홈
             </Font>
+
+            <View style={styles.buttonBox}>
             <Pressable onPress={pressHandle}>
                <CButton>글쓰기</CButton>
             </Pressable>
+            <Pressable onPress={pressPlaceHandle}>
+               <CButton>장소추가</CButton>
+            </Pressable>
+            </View>
         </View>
 
         <View style={{ flex: 1 }}>
@@ -76,6 +88,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between"
 
+    },buttonBox:{
+        flexDirection:"row"
     }
 });
 

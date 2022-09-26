@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import { useContext, useState } from "react";
-import { View, Text, TextInput, Button, Pressable, ActivityIndicator, Alert ,StyleSheet} from "react-native";
+import { View, Text, TextInput, Button, Pressable, ActivityIndicator, Alert, StyleSheet } from "react-native";
 import { sendLoginReq } from "../util/accounts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AppContext } from "../context/app-context";
-
+import CButton from "../components/customButton"
 function Login() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -20,17 +20,18 @@ function Login() {
         !async function () {
             try {
                 const recv = await sendLoginReq(email, password);
-                ctx.dispatch({type:"login", payload:recv})
-                AsyncStorage.setItem("authentication",JSON.stringify(recv));
+                ctx.dispatch({ type: "login", payload: recv })
+                AsyncStorage.setItem("authentication", JSON.stringify(recv));
                 Alert.alert("With", "로그인성공");
                 navigation.navigate("Home");
-            
-            
+
+
             } catch (err) {
                 console.log(err);
                 Alert.alert("With", "로그인이 처리되지 않았습니다. 다시 시도해주세요.");
                 setLoading(true);
             };
+
             setLoading(true);
         }();
         //즉시실행함수를 쓰는 이유는 useEffect는 비동기함수를 넘겨주지 말라고 하니까 이렇게 한거. 그냥 async 함수로 했어도 됐을듯.
@@ -43,18 +44,20 @@ function Login() {
 
     const moveRegisterHandle = () => {
         Alert.alert(
-          "Alert Title",
-          "회원가입화면으로 이동하시겠습니까?",
-          [
-            { text: "OK", onPress: () => 
-            navigation.navigate("Register")},
-            {
-                text: "Cancel",
-                onPress: () => console.log("Cancel Pressed"),
-                style: "destructive"
-              }
-          ])
-          
+            "Alert Title",
+            "회원가입화면으로 이동하시겠습니까?",
+            [
+                {
+                    text: "OK", onPress: () =>
+                        navigation.navigate("Register")
+                },
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "destructive"
+                }
+            ])
+
     }
 
     const emailHandle = (val) => {
@@ -66,55 +69,57 @@ function Login() {
     }
 
     //secureTextEntry={true} type password 처럼 만들기
-    return (<View style={{flex:1}}>
+    return (<View style={{ flex: 1 }}>
 
         <View style={styles.outline}>
-        <View style={styles.inputOut}>
-        <TextInput placeholder="email" onChangeText={emailHandle} style={styles.input}/>
-        <TextInput placeholder="password" secureTextEntry={true} onChangeText={passwordHandle} style={styles.input}/>
-        <View style={styles.button}>
-        <Button title="로그인" onPress={loginHandle}/>
-        </View>
-        </View>
-        <Pressable style={styles.textNavi}>
-            <Text onPress={moveRegisterHandle}>새로운 계정이 필요하신가요?</Text>
-        </Pressable>
+            <View style={styles.inputOut}>
+                <TextInput placeholder="email" onChangeText={emailHandle} style={styles.input} />
+                <TextInput placeholder="password" secureTextEntry={true} onChangeText={passwordHandle} style={styles.input} />
+                <View style={styles.button}>
+                    <Pressable onPress={loginHandle}>
+                        <CButton>로그인</CButton>
+                    </Pressable>
+                </View>
+            </View>
+            <Pressable style={styles.textNavi}>
+                <Text onPress={moveRegisterHandle}>새로운 계정이 필요하신가요?</Text>
+            </Pressable>
         </View>
 
     </View>);
 }
 
 const styles = StyleSheet.create({
-    inputOut:{
-        backgroundColor:"white",
-        padding:30,
-        borderRadius:20,
-        borderWidth:5,
-        borderColor:"skyblue"
+    inputOut: {
+        backgroundColor: "white",
+        padding: 30,
+        borderRadius: 20,
+        borderWidth: 5,
+        borderColor: "steelblue"
     },
-    outline:{
-        flex:1,
-        justifyContent:"center",
-        alignContent:"center",
+    outline: {
+        flex: 1,
+        justifyContent: "center",
+        alignContent: "center",
         marginHorizontal: 30,
-      
+
     },
-    input:{
-        height:50,
-        alignContent:"center",
-        borderBottomWidth:1,
-        borderBottomColor:"grey",
-        paddingHorizontal:20,
-        fontSize:15,
-        marginHorizontal:15,
-        marginBottom:10
+    input: {
+        height: 50,
+        alignContent: "center",
+        borderBottomWidth: 1,
+        borderBottomColor: "grey",
+        paddingHorizontal: 20,
+        fontSize: 15,
+        marginHorizontal: 15,
+        marginBottom: 10
     },
-    textNavi:{
-        alignItems:"center",
+    textNavi: {
+        alignItems: "center",
         marginVertical: 20,
     },
-    button:{
-        marginTop:20
+    button: {
+        marginTop: 20
     }
 
 });

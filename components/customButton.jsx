@@ -7,7 +7,8 @@ function CButton({children}) {
 }
 const styles = StyleSheet.create({
     button:{
-         color:"white"
+         color:"white",
+         textAlign:"center"
     } ,
     outline:{
         padding:10,

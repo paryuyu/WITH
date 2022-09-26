@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View ,SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -18,56 +18,39 @@ import CommunityInput from "./screens/comunityinput"
 import { useSafeAreaFrame } from 'react-native-safe-area-context';
 import Detail from './screens/detail';
 import UpdateInput from "./screens/updateScreen";
+import PlaceAddScreens from './screens/placeAddScreen';
 const topTab = createMaterialTopTabNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
-function CommunityStack(){
-  return(
-    <Stack.Navigator>
-      <Stack.Screen name="Community" component={Comunity} options={{headerShown: false}}/>
-      <Stack.Screen name='Write' component={CommunityInput} options={{presentation:"modal"}}/>
-      <Stack.Screen name='detail' component={Detail} options={{presentation:"modal"}}/>
-      <Stack.Screen name='update' component={UpdateInput} options={{presentation:"modal"}}/>
+function CommunityStack() {
+  return (
+    <Stack.Navigator >
+      <Stack.Screen name="Community" component={Comunity} options={{headerTintColor:"steelblue"}} />
+      <Stack.Screen name='Write' component={CommunityInput} options={{ presentation: "modal" ,headerTintColor:"steelblue" }} />
+      <Stack.Screen name='detail' component={Detail} options={{ presentation: "modal" ,headerTintColor:"steelblue"}} />
+      <Stack.Screen name='update' component={UpdateInput} options={{ presentation: "modal" ,headerTintColor:"steelblue"}} />
+      <Stack.Screen name="place" component={PlaceAddScreens}  options={{ presentation: "modal" ,headerTintColor:"steelblue"}} />
     </Stack.Navigator>
   )
 }
 
 
-function TopTabs() {
-  return (
-    <topTab.Navigator >
-      <topTab.Screen name="Home" component={Home}/>
-      <topTab.Screen name="Comunity" component={CommunityStack} />
-    </topTab.Navigator>
-  );
-}
-
-/**노치 해결 */
-function HomeStack(){
-  return(
-    <Stack.Navigator>
-      <Stack.Screen name = "homestack" component={TopTabs}/>
-      </Stack.Navigator>
-  )
-}
-
 function GuestDrawer() {
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name="Login" component={Login} />
-      <Drawer.Screen name="Register" component={Register} />
+      <Drawer.Screen name="Login" component={Login} options={{headerTintColor:"steelblue"}}/>
+      <Drawer.Screen name="Register" component={Register} options={{headerTintColor:"steelblue"}} />
     </Drawer.Navigator>
   );
 }
 
-
 function MemberDrawer() {
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name="InfoHome" component={Info} />
-      <Drawer.Screen name="Profile" component={Profile} />
+      <Drawer.Screen name="Profile" component={Profile} options={{headerTintColor:"steelblue"}}/>
+      <Drawer.Screen name="InfoHome" component={Info} options={{headerTintColor:"steelblue"}}/>
     </Drawer.Navigator>
   );
 }
@@ -93,24 +76,28 @@ function BottomTab() {
   const ctx = useContext(AppContext);
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={ctx.value ? HomeStack : Home} options={{ headerShown: false, tabBarActiveTintColor:"steelblue", unmountOnBlur:true, tabBarInactiveTintColor:"grey" ,tabBarIcon: ({ focused, color, size }) => { return <Icon name={focused ? "home" : "home-outline"} size={20} color="steelblue"></Icon> } }} />
-      <Tab.Screen name="setting" component={ctx.value? MemberDrawer : GuestDrawer} options={{ headerShown: false, tabBarActiveTintColor:"steelblue" , tabBarInactiveTintColor:"grey" ,tabBarIcon: ({ focused, color, size }) => { return <Icon name={focused ? "settings" : "settings-outline"} size={20} color="steelblue" ></Icon> } }} />
+      <Tab.Screen name="Home" component={Home} options={{ headerShown: false, tabBarActiveTintColor: "steelblue", unmountOnBlur: true, tabBarInactiveTintColor: "grey", tabBarIcon: ({ focused, color, size }) => { return <Icon name={focused ? "home" : "home-outline"} size={20} color="steelblue"></Icon> } }} />
+
+      {ctx.value? 
+      <Tab.Screen name="Comunity" component={CommunityStack} options={{ headerShown: false, tabBarActiveTintColor: "steelblue", tabBarInactiveTintColor: "grey", tabBarIcon: ({ focused, color, size }) => { return <Icon name={focused ? "chatbubbles" : "chatbubbles-outline"} size={20} color="steelblue" ></Icon> } }} />
+      :null}
+
+      <Tab.Screen name="setting" component={ctx.value ? MemberDrawer : GuestDrawer} options={{ headerShown: false, tabBarActiveTintColor: "steelblue", tabBarInactiveTintColor: "grey", tabBarIcon: ({ focused, color, size }) => { return <Icon name={focused ? "settings" : "settings-outline"} size={20} color="steelblue" ></Icon> } }} />
+   
     </Tab.Navigator>
   );
 }
 
 export default function App() {
-
-
   return (
     <>
-    <StatusBar style="auto" />
+      <StatusBar style="auto" />
       <AppContextProvider>
         <NavigationContainer>
-             <BottomTab/>
+          <BottomTab />
         </NavigationContainer>
       </AppContextProvider>
-      </>
+    </>
   );
 }
 
@@ -120,6 +107,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
- 
+
   },
 });

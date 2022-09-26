@@ -4,7 +4,7 @@ import { View,StyleSheet,Text } from "react-native";
 
 
 
-function Font({children}) {
+function UFont({children}) {
 
 
 
@@ -23,7 +23,7 @@ const [loaded] = useFonts({
 
 const styles = StyleSheet.create({
     fonts:{
-        fontFamily:"Jua",
+        fontFamily:"UhBee",
         fontSize:30,
         marginLeft:15,
         marginVertical:10,
@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Font;
+export default UFont;
