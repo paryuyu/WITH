@@ -8,6 +8,8 @@ function Content({ item, navigation }) {
             navigation.navigate("detail", { tag: item })
         }
     }
+
+    
     //컨텐트 내용 잘 받아와주고,
     //입력 fetch해주고.
     return (

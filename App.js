@@ -19,6 +19,10 @@ import { useSafeAreaFrame } from 'react-native-safe-area-context';
 import Detail from './screens/detail';
 import UpdateInput from "./screens/updateScreen";
 import PlaceAddScreens from './screens/placeAddScreen';
+import ChooseLocationScreen from './screens/chooseLocationScreen';
+import PlaceScreen from './screens/placeScreen';
+import PlaceDetail from './components/placeDetail';
+
 const topTab = createMaterialTopTabNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -31,7 +35,17 @@ function CommunityStack() {
       <Stack.Screen name='Write' component={CommunityInput} options={{ presentation: "modal" ,headerTintColor:"steelblue" }} />
       <Stack.Screen name='detail' component={Detail} options={{ presentation: "modal" ,headerTintColor:"steelblue"}} />
       <Stack.Screen name='update' component={UpdateInput} options={{ presentation: "modal" ,headerTintColor:"steelblue"}} />
-      <Stack.Screen name="place" component={PlaceAddScreens}  options={{ presentation: "modal" ,headerTintColor:"steelblue"}} />
+    </Stack.Navigator>
+  )
+}
+
+function PlaceStack(){
+  return (
+    <Stack.Navigator >
+      <Stack.Screen name="placeHome" component={PlaceScreen}  options={{ presentation:"modal", headerTintColor:"steelblue"}} />
+      <Stack.Screen name="place" component={PlaceAddScreens}  options={{ presentation:"modal", headerTintColor:"steelblue"}} />
+      <Stack.Screen name="chooseLocation" component={ChooseLocationScreen}  options={{ presentation: "modal" ,headerTintColor:"steelblue"}} />
+      <Stack.Screen name="PlaceDetail" component={PlaceDetail}  options={{ presentation: "modal" ,headerTintColor:"steelblue"}} />
     </Stack.Navigator>
   )
 }
@@ -82,8 +96,9 @@ function BottomTab() {
       <Tab.Screen name="Comunity" component={CommunityStack} options={{ headerShown: false, tabBarActiveTintColor: "steelblue", tabBarInactiveTintColor: "grey", tabBarIcon: ({ focused, color, size }) => { return <Icon name={focused ? "chatbubbles" : "chatbubbles-outline"} size={20} color="steelblue" ></Icon> } }} />
       :null}
 
-      <Tab.Screen name="setting" component={ctx.value ? MemberDrawer : GuestDrawer} options={{ headerShown: false, tabBarActiveTintColor: "steelblue", tabBarInactiveTintColor: "grey", tabBarIcon: ({ focused, color, size }) => { return <Icon name={focused ? "settings" : "settings-outline"} size={20} color="steelblue" ></Icon> } }} />
+      <Tab.Screen name="Place" component={PlaceStack} options={{ headerShown: false, tabBarActiveTintColor: "steelblue", tabBarInactiveTintColor: "grey", tabBarIcon: ({ focused, color, size }) => { return <Icon name={focused ? "navigate" : "navigate-outline"} size={20} color="steelblue" ></Icon> } }} />
    
+      <Tab.Screen name="setting" component={ctx.value ? MemberDrawer : GuestDrawer} options={{ headerShown: false, tabBarActiveTintColor: "steelblue", tabBarInactiveTintColor: "grey", tabBarIcon: ({ focused, color, size }) => { return <Icon name={focused ? "settings" : "settings-outline"} size={20} color="steelblue" ></Icon> } }} />
     </Tab.Navigator>
   );
 }

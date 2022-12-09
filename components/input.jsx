@@ -1,13 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { useContext, useEffect, useReducer, useState } from "react";
-import { View, Text, TextInput, Button ,StyleSheet, Pressable } from "react-native";
+import { View, Text, TextInput, Button ,StyleSheet, Pressable ,TouchableWithoutFeedback, Keyboard} from "react-native";
 import { AppContext } from "../context/app-context";
 import { Write } from "../util/content";
 import CButton from "./customButton";
-function Input() {
+
+function Input({navigation}) {
+
     const ctx = useContext(AppContext);
-    const navigation = useNavigation();
+    //const navigation = useNavigation();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [owner, setOwner] = useState();
@@ -26,23 +28,24 @@ function Input() {
     }
 
     const PressHandle = () => {
-        ctx.setRefresh(false);
         !async function () {
             try {
                 console.log(title, content,  ctx.value.email,ctx.value.idToken);
                 const recv = await Write(title, content, new Date(), ctx.value.email, ctx.value.idToken);
-                navigation.navigate("Community")
-
+                navigation.navigate("Community");
             } catch (err) {
                 console.log(err)
             }
         }();
+        
+        ctx.setRefresh(false);
 
     }
 
-    
 
-    return (<View>
+    return (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <View>
         <View>
             <TextInput
                 placeholder="title" onChangeText={titleChangeHandle} 
@@ -54,13 +57,24 @@ function Input() {
                 style={styles.contentInput}
                 multiline={true}/>
         </View>
+        <View style={styles.buttonBox}>
         <Pressable onPress={PressHandle} style={styles.button}>
         <CButton>등록</CButton>
         </Pressable>
-    </View>);
+        </View>
+    </View>
+    </TouchableWithoutFeedback>
+    );
 }
 
 const styles = StyleSheet.create({
+    buttonBox:{
+      //  flex:1,
+        flexDirection:"row",
+        justifyContent:"flex-end",
+        marginHorizontal:5
+
+    },
     titleInput:{
         borderBottomWidth:1,
         height:50,
@@ -80,7 +94,7 @@ const styles = StyleSheet.create({
     },
     button:{
         alignItems:"flex-end",
-        marginRight:10
+       // marginRight:10
     }
 });
 export default Input;

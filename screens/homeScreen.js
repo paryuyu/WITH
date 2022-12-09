@@ -17,7 +17,7 @@ function Home() {
         return <></>
       }
     const pressHandle = () => {
-        navigation.navigate("Login")
+        navigation.navigate("setting")
     }
 
     return (<View style={styles.outline}>

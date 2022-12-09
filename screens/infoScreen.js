@@ -4,8 +4,11 @@ import { FlatList } from "react-native-gesture-handler";
 import CButton from "../components/customButton";
 import MyText from "../components/myText";
 import { AppContext } from "../context/app-context";
+import Font from "../components/Font";
+import { useNavigation } from "@react-navigation/native";
 function Info() {
 
+  let navigation = useNavigation();
   const ctx = useContext(AppContext)
 
   let rst = Object.keys(ctx.infoData).map((one) => {
@@ -14,15 +17,12 @@ function Info() {
     return newinfo;
   })
 
-  if(ctx.refresh){
-    ctx.setRefresh(false)
-  }
   return (
-    <View>
-      <View><Text>{ctx.value.email}</Text></View>
+    <View style={{flex:1}}>
+      <View><Font>{ctx.value.email}</Font></View>
       <FlatList data={rst}
         keyExtractor={(one) => { one.id }}
-        renderItem={({ item, index }) => { return <MyText item={item} /> }}
+        renderItem={({ item, index }) => { return <MyText item={item} navigation={navigation}/> }}
       />
     </View>);
 }

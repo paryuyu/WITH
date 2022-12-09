@@ -20,11 +20,15 @@ function Comunity() {
     useEffect(() => {
         
         async function read() {
-            const res = await axios.get(`https://with-2aba0-default-rtdb.asia-southeast1.firebasedatabase.app/blah.json`).then(res => {setReads(res.data)
-            ctx.setinfoData(res.data)}
-            )
+            try{
+                const res = await axios.get(`https://with-2aba0-default-rtdb.asia-southeast1.firebasedatabase.app/blah.json`).then(res => {setReads(res.data)
+                ctx.setinfoData(res.data)}
+                )
+            }catch(err){console.log(err)}
+          
         }
         read();
+        
         if(!ctx.refresh){
             ctx.setRefresh(true);
         }
@@ -47,12 +51,7 @@ function Comunity() {
         navigation.navigate("Write")
     }
     
-    /**장소추가 */
-    const pressPlaceHandle = () => {
-        navigation.navigate("place")
-    }
-
-
+   
 
     return (<View style={{ flex: 1 }}>
         <View style={styles.titleText}>
@@ -64,9 +63,7 @@ function Comunity() {
             <Pressable onPress={pressHandle}>
                <CButton>글쓰기</CButton>
             </Pressable>
-            <Pressable onPress={pressPlaceHandle}>
-               <CButton>장소추가</CButton>
-            </Pressable>
+         
             </View>
         </View>
 
@@ -78,6 +75,7 @@ function Comunity() {
                 renderItem={({ item, index }) => {
                     return <Content item={item} navigation={navigation} />
                 }}
+               
             />
         </View>
     </View>);

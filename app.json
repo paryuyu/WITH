@@ -18,24 +18,41 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#FFFFFF",
+        "versionCode": 1
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.yuyu1124.WITH",
+      "config":{
+        "googleMaps":{
+          "apiKey":"AIzaSyDV3uZd-vG6qkk2LPNp9He_fT0z7kobMFo"
+        }
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-
     "plugins": [
       [
         "expo-image-picker",
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends.",
           "cameraPermission": "The app accesses your photos to let you share them with your friends."
-        }]]
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "76ef9ddd-e5ff-45a3-aa41-0f73159f80e4"
+      }
+    }
   }
 }

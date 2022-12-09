@@ -19,6 +19,7 @@ function Detail({route}) {
 
     
     const deletePressHandle =  () => {
+
         Alert.alert(
             "Alert Title",
             "삭제 하시겠습니까?",
@@ -45,9 +46,11 @@ function Detail({route}) {
 
     return ( <View style={{flex:1}}>
         <View style={styles.headerBox}> 
+
         <View>
         <Text style={styles.header}>{tag.title}</Text>
         </View>
+
         <View style={styles.miniHeader}>
         <View>
         <Text style={styles.miniHeaderText}>{tag.owner}</Text>
@@ -55,6 +58,7 @@ function Detail({route}) {
         <View>
         <Text style={styles.miniHeaderText}>{tag.createdAt.slice(0,10)} ( {tag.createdAt.slice(11,19)} )</Text>
         </View>
+        
         </View>
         </View>
 

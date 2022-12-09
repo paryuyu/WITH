@@ -1,7 +1,8 @@
 import { View, Pressable, StyleSheet, TouchableOpacity, Alert,Image ,Text} from "react-native";
 import { launchCameraAsync, useCameraPermissions,useMediaLibraryPermissions, PermissionStatus , launchImageLibraryAsync} from "expo-image-picker"
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AppContext } from "../context/app-context";
 
 
 export default function ImgPicker() {
@@ -9,8 +10,7 @@ export default function ImgPicker() {
     const [imgUri, setImgUri] = useState(null);
     const [cameraStatus, requestCameraPermission] = useCameraPermissions();
     const [albumStatus, requestAlbumPermission] = useMediaLibraryPermissions();
-
-
+    const ctx = useContext(AppContext);
     const cameraPress = async () => {
         try {
             if (cameraStatus.status === PermissionStatus.DENIED || cameraStatus.status === PermissionStatus.UNDETERMINED) {
@@ -36,14 +36,28 @@ export default function ImgPicker() {
         const rst = await launchCameraAsync({
             quality: 0.5,
             allowsEditing: true,
-            aspect: [16, 9]
+            aspect: [4,3],
+
+            /**사진이 가지고 있는 정보값*/
+            exif:true,
+
+            /**base64: 인코딩방식인데 파일의 byte를 가지고 문자열로 바꿔주는 것.*/
+            base64:true
         });
+       
 
        
         if(!rst.cancelled){
+
             setImgUri(rst.uri);
+            imagePickHandle(rst.uri);
+            ctx.setPlaceImg(rst.uri);
+            ctx.setPlaceImgBase64(rst.base64);
+           
         }
     }
+
+     
 
     const albumPress = async() => {
 
@@ -55,15 +69,14 @@ export default function ImgPicker() {
                 Alert.alert("With", "사진앨범 접근권한이 필요합니다.");
                 return;
             }
-           }
 
+           }
 
         }catch(err){
             console.log(err);
             return;
         }
 
-        console.log(albumStatus,"앨범")
 
         /**권한요청 */
         requestAlbumPermission();
@@ -72,15 +85,20 @@ export default function ImgPicker() {
         const rst = await launchImageLibraryAsync({
             quality: 0.5,
             allowsEditing: true,
-            aspect: [16, 9]
+            aspect: [16, 9],
+            exif:true,
+            base64:true
         });
 
-        
+
         if(!rst.cancelled){
             setImgUri(rst.uri);
+            ctx.setPlaceImg(rst.uri);
+            ctx.setPlaceImgBase64(rst.base64);
         }
 
     }
+
 
     return (
         <View style={{ flex: 1 }}>
@@ -109,6 +127,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         marginTop: 10,
         justifyContent:"center",
+        borderRadius:10
       
     },
     photoiconBox: {

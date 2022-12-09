@@ -74,7 +74,7 @@ function Login() {
         <View style={styles.outline}>
             <View style={styles.inputOut}>
                 <TextInput placeholder="email" onChangeText={emailHandle} style={styles.input} />
-                <TextInput placeholder="password" secureTextEntry={true} onChangeText={passwordHandle} style={styles.input} />
+                <TextInput placeholder="password" secureTextEntry={true} onChangeText={passwordHandle} style={styles.input}/>
                 <View style={styles.button}>
                     <Pressable onPress={loginHandle}>
                         <CButton>로그인</CButton>
