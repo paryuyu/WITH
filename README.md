@@ -5,6 +5,7 @@
 - 특정 장소에 대한 리뷰를 하는 커뮤니티 어플
 
 > 사용기술
+
 `React Native` `Expo` `JavaScript` `firebase`
 
 > 기능 소개
