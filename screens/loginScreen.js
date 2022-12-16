@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useContext, useState } from "react";
+import { useContext, useState ,useEffect} from "react";
 import { View, Text, TextInput, Button, Pressable, ActivityIndicator, Alert, StyleSheet } from "react-native";
 import { sendLoginReq } from "../util/accounts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -7,6 +7,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { AppContext } from "../context/app-context";
 import CButton from "../components/customButton"
 function Login() {
+
+
+
+    useEffect(()=>{
+        console.log(process.env.GOOGLE_APP_KEY)
+    
+      },[])
+
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [loading, setLoading] = useState(false);

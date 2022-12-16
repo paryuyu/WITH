@@ -12,7 +12,7 @@ import Login from './screens/loginScreen';
 import Register from './screens/registerScreen';
 import Profile from './screens/profileScreen';
 import Info from './screens/infoScreen';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Comunity from './screens/community';
 import CommunityInput from "./screens/comunityinput"
 import { useSafeAreaFrame } from 'react-native-safe-area-context';
@@ -29,6 +29,13 @@ const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
 function CommunityStack() {
+
+
+
+
+
+
+
   return (
     <Stack.Navigator >
       <Stack.Screen name="Community" component={Comunity} options={{headerTintColor:"steelblue"}} />
