@@ -27,7 +27,6 @@ export default function MapPicker({ }) {
             return true;
         }
 
-       // currentPlace();
 
     }
 
